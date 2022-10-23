@@ -3,7 +3,7 @@
 ### Background
 
 This is a demo repo showing off the usage of my OAuth2 module [here](https://github.com/Schachte/cloudflare-google-auth). The goal is 
-to easily authenticate with the Google Cloud HTTP API when using the OAuth2 flow for a service account.
+to easily authenticate with the Google Cloud HTTP API when using the OAuth2 flow for a service account from within a Cloudflare Worker.
 
 ### Deployment
 
