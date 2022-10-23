@@ -22,13 +22,13 @@ export default {
 		const oauth = new GoogleAuth(googleAuth, scopes)
 		const token = await oauth.getGoogleAuthToken()
 
-		// Example: fetch object from GCS
-		if (token !== undefined) {
-			const res = await fetchObjectFromGCS(token, "media.ryan-schachte.com", "image.png")
-			return new Response(res.body, { headers: { 'Content-Type': 'image/png' } });
+		if (token === undefined) {
+			throw new Error("generating Google auth token failed")
 		}
 
-		throw new Error("generating Google auth token failed")
+		// Example: fetch object from GCS
+		const res = await fetchObjectFromGCS(token, "media.ryan-schachte.com", "image.png")
+		return new Response(res.body, { headers: { 'Content-Type': 'image/png' } });
 	},
 };
 
@@ -38,7 +38,7 @@ export default {
  * @param token is the newly generated OAuth2 bearer token 
  * @param bucketName the bucket in which your target object is stored within
  * @param objectName the name of the object you want to pull (ie. my_image.png)
- * @returns the 
+ * @returns the object bytes downloaded from the GCS bucket
  */
 const fetchObjectFromGCS = async (token: string, bucketName: string, objectName: string): Promise<Response> => {
 	return await fetch(
